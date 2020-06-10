@@ -8,8 +8,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-import static com.codeborne.selenide.Selenide.$;
-
 public class RegistrationData {
 
 
@@ -50,9 +48,9 @@ public class RegistrationData {
         int numberSpecialSymbols=14;
         int randomIndexSpecialSymbols = (int) (Math.random() * numberSpecialSymbols);
         int i=0;
-        String name=null;
-        String city=null;
-        String phone=null;
+        String name="";
+        String city="";
+        String phone="";
         int leghtParam= (int) (Math.random() * numberSpecialSymbols);
         while (i < leghtParam) {
             name=name+specialSymbols[randomIndexSpecialSymbols];
@@ -77,7 +75,6 @@ public class RegistrationData {
         int cityNumber = 5;
         String[] city = {"Сургут", "Нижневартовск", "Нефтеюганск", "Покачи", "Лянтор"};
         int randomIndexCity = (int) (Math.random() * cityNumber);
-        String randomCity;
         Faker faker = new Faker(new Locale("ru"));
         FakeValuesService fakeValuesService = new FakeValuesService(
                 new Locale("ru"), new RandomService());
@@ -88,4 +85,38 @@ public class RegistrationData {
                 city[randomIndexCity],
                 phone);
     }
+
+    public static RegistrationSpecificName registrationShortName(String locale) {
+        Faker faker = new Faker(new Locale("ru"));
+        String nameStr = faker.letterify("[А-Я]{1}") + " " + faker.letterify("[А-Я]{1}");
+        return new RegistrationSpecificName(nameStr);
+    }
+
+    public static RegistrationSpecificName registrationNameInEnglish(String locale) {
+        Faker faker = new Faker(new Locale("ru"));
+         return new RegistrationSpecificName(faker.name().fullName());
+    }
+
+    public static RegistrationSpecificName registrationDubleName(String locale) {
+        Faker faker = new Faker(new Locale("ru"));
+        String nameStr=faker.name().lastName()+" "+faker.name().firstName()+"-"+faker.name().firstName();
+        return new RegistrationSpecificName(nameStr);
+    }
+
+    public static RegistrationSpecificName registrationNameletterYO(String locale) {
+        int nameNumber = 5;
+        String[] lastName = {"Кисилёв", "Фёдорова", "Ёлкин", "Ёжиков", "Королёва"};
+        int randomIndexName = (int) (Math.random() * nameNumber);
+        Faker faker = new Faker(new Locale("ru"));
+        String nameStr=lastName[randomIndexName]+" "+faker.name().firstName();
+        return new RegistrationSpecificName(nameStr);
+    }
+
+    public static RegistrationSpecificName registrationNameDifferentCaseLetters(String locale) {
+        Faker faker = new Faker(new Locale("ru"));
+        String nameStr = faker.letterify("[А-Я]{6}") + " " + faker.name().firstName();
+        return new RegistrationSpecificName(nameStr);
+    }
+
+
 }

@@ -1,7 +1,6 @@
 package ru.netology.test;
 
 import com.codeborne.selenide.SelenideElement;
-import com.github.javafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -40,7 +39,8 @@ public class DeliveryTest {
         $(withText("Успешно!")).waitUntil(visible, 15000);
     }
 
-    @Test //ussue
+    @Test
+        //ussue1
     void shouldNotReplanMeetingDatesEqual() {
         String datePlan = RegistrationData.registrationDate("ru").getDate();
         $("[placeholder='Город']").setValue(RegistrationData.registrationUserValidData("ru").getCity());
@@ -156,7 +156,7 @@ public class DeliveryTest {
         }
 
         @Test
-            //ussue
+            //ussue2
         void shouldNotReplanMeetingPhoneSpecialSymbols() {
             $("[placeholder='Город']").setValue(RegistrationData.registrationUserValidData("ru").getCity());
             $("[type='tel'][placeholder='Дата встречи']").click();
@@ -183,54 +183,107 @@ public class DeliveryTest {
             SelenideElement date = $("[data-test-id='date']");
             date.$("[class='input__sub']").shouldHave(exactText("Неверно введена дата"));
         }
+    }
 
-        @Nested
-        class NotValidDateInFieldsOtions {
+    @Nested
+    class NotValidDateInFieldsOtions {
 
-            @Test
-            void shouldNotReplanMeetingCityNotValid() {
-                $("[placeholder='Город']").setValue(RegistrationData.registrationUserNotValidData("ru").getCity());
-                $("[type='tel'][placeholder='Дата встречи']").click();
-                $("[type='tel'][placeholder='Дата встречи']").sendKeys(Keys.SHIFT, Keys.HOME, Keys.DELETE);
-                $("[type='tel'][placeholder='Дата встречи']").setValue(RegistrationData.registrationDate("ru").getDate());
-                $("[name='name']").setValue(RegistrationData.registrationUserValidData("ru").getName());
-                $("[name='phone']").setValue(RegistrationData.registrationUserValidData("ru").getPhone());
-                $("[role='presentation']").click();
-                $$("button").find(exactText("Запланировать")).click();
-                SelenideElement city = $("[data-test-id='city']");
-                city.$("[class='input__sub']").shouldHave(exactText("Доставка в выбранный город недоступна"));
-            }
-
-            @Test
-                //ussue
-            void shouldNotReplanMeetingNameNotValid() {
-                $("[placeholder='Город']").setValue(RegistrationData.registrationUserValidData("ru").getCity());
-                $("[type='tel'][placeholder='Дата встречи']").click();
-                $("[type='tel'][placeholder='Дата встречи']").sendKeys(Keys.SHIFT, Keys.HOME, Keys.DELETE);
-                $("[type='tel'][placeholder='Дата встречи']").setValue(RegistrationData.registrationDate("ru").getDate());
-                $("[name='name']").setValue(RegistrationData.registrationUserNotValidData("ru").getName());
-                $("[name='phone']").setValue(RegistrationData.registrationUserValidData("ru").getPhone());
-                $("[role='presentation']").click();
-                $$("button").find(exactText("Запланировать")).click();
-                SelenideElement name = $("[data-test-id='name']");
-                name.$("[class='input__sub']").shouldHave(exactText("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
-            }
-
-            @Test
-//ussue
-            void shouldNotReplanMeetingPhoneNotValid() {
-                $("[placeholder='Город']").setValue(RegistrationData.registrationUserValidData("ru").getCity());
-                $("[type='tel'][placeholder='Дата встречи']").click();
-                $("[type='tel'][placeholder='Дата встречи']").sendKeys(Keys.SHIFT, Keys.HOME, Keys.DELETE);
-                $("[type='tel'][placeholder='Дата встречи']").setValue(RegistrationData.registrationDate("ru").getDate());
-                $("[name='name']").setValue(RegistrationData.registrationUserValidData("ru").getName());
-                $("[name='phone']").setValue(RegistrationData.registrationUserNotValidData("ru").getPhone());
-                $("[role='presentation']").click();
-                $$("button").find(exactText("Запланировать")).click();
-                SelenideElement phone = $("[data-test-id='phone']");
-                phone.$("[class='input__sub']").shouldHave(exactText("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678."));
-            }
+        @Test
+        void shouldNotReplanMeetingCityNotValid() {
+            $("[placeholder='Город']").setValue(RegistrationData.registrationUserNotValidData("ru").getCity());
+            $("[type='tel'][placeholder='Дата встречи']").click();
+            $("[type='tel'][placeholder='Дата встречи']").sendKeys(Keys.SHIFT, Keys.HOME, Keys.DELETE);
+            $("[type='tel'][placeholder='Дата встречи']").setValue(RegistrationData.registrationDate("ru").getDate());
+            $("[name='name']").setValue(RegistrationData.registrationUserValidData("ru").getName());
+            $("[name='phone']").setValue(RegistrationData.registrationUserValidData("ru").getPhone());
+            $("[role='presentation']").click();
+            $$("button").find(exactText("Запланировать")).click();
+            SelenideElement city = $("[data-test-id='city']");
+            city.$("[class='input__sub']").shouldHave(exactText("Доставка в выбранный город недоступна"));
         }
-      // Добавить тесты где имя с ё, имя разных регистров, имя на англ.
+
+        @Test
+            //ussue3
+        void shouldNotReplanMeetingNameNotValid() {
+            $("[placeholder='Город']").setValue(RegistrationData.registrationUserValidData("ru").getCity());
+            $("[type='tel'][placeholder='Дата встречи']").click();
+            $("[type='tel'][placeholder='Дата встречи']").sendKeys(Keys.SHIFT, Keys.HOME, Keys.DELETE);
+            $("[type='tel'][placeholder='Дата встречи']").setValue(RegistrationData.registrationDate("ru").getDate());
+            $("[name='name']").setValue(RegistrationData.registrationUserNotValidData("ru").getName());
+            $("[name='phone']").setValue(RegistrationData.registrationUserValidData("ru").getPhone());
+            $("[role='presentation']").click();
+            $$("button").find(exactText("Запланировать")).click();
+            SelenideElement name = $("[data-test-id='name']");
+            name.$("[class='input__sub']").shouldHave(exactText("Укажите точно как в паспорте"));
+        }
+
+        @Test
+            //ussue4
+        void shouldNotReplanMeetingPhoneNotValid() {
+            $("[placeholder='Город']").setValue(RegistrationData.registrationUserValidData("ru").getCity());
+            $("[type='tel'][placeholder='Дата встречи']").click();
+            $("[type='tel'][placeholder='Дата встречи']").sendKeys(Keys.SHIFT, Keys.HOME, Keys.DELETE);
+            $("[type='tel'][placeholder='Дата встречи']").setValue(RegistrationData.registrationDate("ru").getDate());
+            $("[name='name']").setValue(RegistrationData.registrationUserValidData("ru").getName());
+            $("[name='phone']").setValue(RegistrationData.registrationUserNotValidData("ru").getPhone());
+            $("[role='presentation']").click();
+            $$("button").find(exactText("Запланировать")).click();
+            SelenideElement phone = $("[data-test-id='phone']");
+            phone.$("[class='input__sub']").shouldHave(exactText("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678."));
+        }
+    }
+
+    @Nested
+    class NameOptions {
+
+        @BeforeEach
+        void init() {
+            $("[placeholder='Город']").setValue(RegistrationData.registrationUserValidData("ru").getCity());
+            $("[type='tel'][placeholder='Дата встречи']").click();
+            $("[type='tel'][placeholder='Дата встречи']").sendKeys(Keys.SHIFT, Keys.HOME, Keys.DELETE);
+            $("[type='tel'][placeholder='Дата встречи']").setValue(RegistrationData.registrationDate("ru").getDate());
+            $("[name='phone']").setValue(RegistrationData.registrationUserValidData("ru").getPhone());
+            $("[role='presentation']").click();
+        }
+
+        @Test
+        void shouldNotReplanMeetingDubleName() {
+            $("[name='name']").setValue(RegistrationData.registrationDubleName("ru").getName());
+            $$("button").find(exactText("Запланировать")).click();
+            $(withText("Успешно!")).waitUntil(visible, 15000);
+        }
+
+        @Test
+        void shouldNotReplanMeetingShortName() {
+            $("[name='name']").setValue(RegistrationData.registrationShortName("ru").getName());
+            $$("button").find(exactText("Запланировать")).click();
+            $(withText("Успешно!")).waitUntil(visible, 15000);
+        }
+
+        @Test
+        void shouldNotReplanMeetingNameInEnglish() {
+            $("[name='name']").setValue(RegistrationData.registrationNameInEnglish("ru").getName());
+            $$("button").find(exactText("Запланировать")).click();
+            SelenideElement name = $("[data-test-id='name']");
+            name.$("[class='input__sub']").shouldHave(exactText("Укажите точно как в паспорте"));
+        }
+
+        @Test
+            //ussue5
+        void shouldNotReplanMeetingNameletterYO() {
+            $("[name='name']").setValue(RegistrationData.registrationNameletterYO("ru").getName());
+            $$("button").find(exactText("Запланировать")).click();
+            $(withText("Успешно!")).waitUntil(visible, 15000);
+        }
+
+        @Test
+            //ussue6
+        void shouldNotReplanMeetingNameDifferentCaseLetters() {
+            $("[name='name']").setValue(RegistrationData.registrationNameDifferentCaseLetters("ru").getName());
+            $$("button").find(exactText("Запланировать")).click();
+            SelenideElement name = $("[data-test-id='name']");
+            name.$("[class='input__sub']").shouldHave(exactText("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
+        }
     }
 }
+
