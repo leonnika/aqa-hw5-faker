@@ -88,7 +88,7 @@ public class RegistrationData {
 
     public static RegistrationSpecificName registrationShortName(String locale) {
         Faker faker = new Faker(new Locale("ru"));
-        String nameStr = faker.letterify("[А-Я]{1}") + " " + faker.letterify("[А-Я]{1}");
+        String nameStr = faker.regexify("[А-Я]{1}") + " " + faker.regexify("[А-Я]{1}");
         return new RegistrationSpecificName(nameStr);
     }
 
@@ -114,7 +114,7 @@ public class RegistrationData {
 
     public static RegistrationSpecificName registrationNameDifferentCaseLetters(String locale) {
         Faker faker = new Faker(new Locale("ru"));
-        String nameStr = faker.letterify("[А-Я]{6}") + " " + faker.name().firstName();
+        String nameStr = faker.regexify("[А-Я]{6}") + " " + faker.name().firstName();
         return new RegistrationSpecificName(nameStr);
     }
 

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 import ru.netology.data.RegistrationData;
+import ru.netology.data.RegistrationUser;
 
 import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.visible;
@@ -14,6 +15,9 @@ import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DeliveryTest {
+RegistrationUser userValid = RegistrationData.registrationUserValidData("ru");
+RegistrationUser userSpecialSymbols=RegistrationData.registrationUserDataSpecialSymbols("ru");
+RegistrationUser userNotValid =RegistrationData.registrationUserNotValidData("ru");
 
     @BeforeEach
     void setUpAll() {
@@ -22,12 +26,12 @@ public class DeliveryTest {
 
     @Test
     void shouldReplanMeetingDataValid() {
-        $("[placeholder='Город']").setValue(RegistrationData.registrationUserValidData("ru").getCity());
+        $("[placeholder='Город']").setValue(userValid.getCity());
         $("[type='tel'][placeholder='Дата встречи']").click();
         $("[type='tel'][placeholder='Дата встречи']").sendKeys(Keys.SHIFT, Keys.HOME, Keys.DELETE);
         $("[type='tel'][placeholder='Дата встречи']").setValue(RegistrationData.registrationDate("ru").getDate());
-        $("[name='name']").setValue(RegistrationData.registrationUserValidData("ru").getName());
-        $("[name='phone']").setValue(RegistrationData.registrationUserValidData("ru").getPhone());
+        $("[name='name']").setValue(userValid.getName());
+        $("[name='phone']").setValue(userValid.getPhone());
         $("[role='presentation']").click();
         $$("button").find(exactText("Запланировать")).click();
         $(withText("Успешно!")).waitUntil(visible, 15000);
@@ -43,12 +47,12 @@ public class DeliveryTest {
         //ussue1
     void shouldNotReplanMeetingDatesEqual() {
         String datePlan = RegistrationData.registrationDate("ru").getDate();
-        $("[placeholder='Город']").setValue(RegistrationData.registrationUserValidData("ru").getCity());
+        $("[placeholder='Город']").setValue(userValid.getCity());
         $("[type='tel'][placeholder='Дата встречи']").click();
         $("[type='tel'][placeholder='Дата встречи']").sendKeys(Keys.SHIFT, Keys.HOME, Keys.DELETE);
         $("[type='tel'][placeholder='Дата встречи']").setValue(datePlan);
-        $("[name='name']").setValue(RegistrationData.registrationUserValidData("ru").getName());
-        $("[name='phone']").setValue(RegistrationData.registrationUserValidData("ru").getPhone());
+        $("[name='name']").setValue(userValid.getName());
+        $("[name='phone']").setValue(userValid.getPhone());
         $("[role='presentation']").click();
         $$("button").find(exactText("Запланировать")).click();
         $(withText("Успешно!")).waitUntil(visible, 15000);
@@ -58,12 +62,12 @@ public class DeliveryTest {
 
     @Test
     void shouldNotReplanMeetingDateValidCheckIsNot() {
-        $("[placeholder='Город']").setValue(RegistrationData.registrationUserValidData("ru").getCity());
+        $("[placeholder='Город']").setValue(userValid.getCity());
         $("[type='tel'][placeholder='Дата встречи']").click();
         $("[type='tel'][placeholder='Дата встречи']").sendKeys(Keys.SHIFT, Keys.HOME, Keys.DELETE);
         $("[type='tel'][placeholder='Дата встречи']").setValue(RegistrationData.registrationDate("ru").getDate());
-        $("[name='name']").setValue(RegistrationData.registrationUserValidData("ru").getName());
-        $("[name='phone']").setValue(RegistrationData.registrationUserValidData("ru").getPhone());
+        $("[name='name']").setValue(userValid.getName());
+        $("[name='phone']").setValue(userValid.getPhone());
         $$("button").find(exactText("Запланировать")).click();
         assertEquals("rgba(255, 92, 92, 1)", $("[data-test-id=agreement]").getCssValue("color"));
     }
@@ -77,8 +81,8 @@ public class DeliveryTest {
             $("[type='tel'][placeholder='Дата встречи']").click();
             $("[type='tel'][placeholder='Дата встречи']").sendKeys(Keys.SHIFT, Keys.HOME, Keys.DELETE);
             $("[type='tel'][placeholder='Дата встречи']").setValue(RegistrationData.registrationDate("ru").getDate());
-            $("[name='name']").setValue(RegistrationData.registrationUserValidData("ru").getName());
-            $("[name='phone']").setValue(RegistrationData.registrationUserValidData("ru").getPhone());
+            $("[name='name']").setValue(userValid.getName());
+            $("[name='phone']").setValue(userValid.getPhone());
             $("[role='presentation']").click();
             $$("button").find(exactText("Запланировать")).click();
             $("[class='input__sub']").shouldHave(exactText(expected));
@@ -86,11 +90,11 @@ public class DeliveryTest {
 
         @Test
         void shouldNotReplanMeetingNameEmpty() {
-            $("[placeholder='Город']").setValue(RegistrationData.registrationUserValidData("ru").getCity());
+            $("[placeholder='Город']").setValue(userValid.getCity());
             $("[type='tel'][placeholder='Дата встречи']").click();
             $("[type='tel'][placeholder='Дата встречи']").sendKeys(Keys.SHIFT, Keys.HOME, Keys.DELETE);
             $("[type='tel'][placeholder='Дата встречи']").setValue(RegistrationData.registrationDate("ru").getDate());
-            $("[name='phone']").setValue(RegistrationData.registrationUserValidData("ru").getPhone());
+            $("[name='phone']").setValue(userValid.getPhone());
             $("[role='presentation']").click();
             $$("button").find(exactText("Запланировать")).click();
             SelenideElement name = $("[data-test-id='name']");
@@ -99,11 +103,11 @@ public class DeliveryTest {
 
         @Test
         void shouldNotReplanMeetingPhoneEmpty() {
-            $("[placeholder='Город']").setValue(RegistrationData.registrationUserValidData("ru").getCity());
+            $("[placeholder='Город']").setValue(userValid.getCity());
             $("[type='tel'][placeholder='Дата встречи']").click();
             $("[type='tel'][placeholder='Дата встречи']").sendKeys(Keys.SHIFT, Keys.HOME, Keys.DELETE);
             $("[type='tel'][placeholder='Дата встречи']").setValue(RegistrationData.registrationDate("ru").getDate());
-            $("[name='name']").setValue(RegistrationData.registrationUserValidData("ru").getName());
+            $("[name='name']").setValue(userValid.getName());
             $("[role='presentation']").click();
             $$("button").find(exactText("Запланировать")).click();
             SelenideElement phone = $("[data-test-id='phone']");
@@ -112,11 +116,11 @@ public class DeliveryTest {
 
         @Test
         void shouldNotReplanMeetingDateEmpty() {
-            $("[placeholder='Город']").setValue(RegistrationData.registrationUserValidData("ru").getCity());
+            $("[placeholder='Город']").setValue(userValid.getCity());
             $("[type='tel'][placeholder='Дата встречи']").click();
             $("[type='tel'][placeholder='Дата встречи']").sendKeys(Keys.SHIFT, Keys.HOME, Keys.DELETE);
-            $("[name='name']").setValue(RegistrationData.registrationUserValidData("ru").getName());
-            $("[name='phone']").setValue(RegistrationData.registrationUserValidData("ru").getPhone());
+            $("[name='name']").setValue(userValid.getName());
+            $("[name='phone']").setValue(userValid.getPhone());
             $("[role='presentation']").click();
             $$("button").find(exactText("Запланировать")).click();
             SelenideElement date = $("[data-test-id='date']");
@@ -129,12 +133,12 @@ public class DeliveryTest {
 
         @Test
         void shouldNotReplanMeetingCitySpecialSymbols() {
-            $("[placeholder='Город']").setValue(RegistrationData.registrationUserDataSpecialSymbols("ru").getCity());
+            $("[placeholder='Город']").setValue(userSpecialSymbols.getCity());
             $("[type='tel'][placeholder='Дата встречи']").click();
             $("[type='tel'][placeholder='Дата встречи']").sendKeys(Keys.SHIFT, Keys.HOME, Keys.DELETE);
             $("[type='tel'][placeholder='Дата встречи']").setValue(RegistrationData.registrationDate("ru").getDate());
-            $("[name='name']").setValue(RegistrationData.registrationUserValidData("ru").getName());
-            $("[name='phone']").setValue(RegistrationData.registrationUserValidData("ru").getPhone());
+            $("[name='name']").setValue(userValid.getName());
+            $("[name='phone']").setValue(userValid.getPhone());
             $("[role='presentation']").click();
             $$("button").find(exactText("Запланировать")).click();
             SelenideElement city = $("[data-test-id='city']");
@@ -143,12 +147,12 @@ public class DeliveryTest {
 
         @Test
         void shouldNotReplanMeetingNameSpecialSymbols() {
-            $("[placeholder='Город']").setValue(RegistrationData.registrationUserValidData("ru").getCity());
+            $("[placeholder='Город']").setValue(userValid.getCity());
             $("[type='tel'][placeholder='Дата встречи']").click();
             $("[type='tel'][placeholder='Дата встречи']").sendKeys(Keys.SHIFT, Keys.HOME, Keys.DELETE);
             $("[type='tel'][placeholder='Дата встречи']").setValue(RegistrationData.registrationDate("ru").getDate());
-            $("[name='name']").setValue(RegistrationData.registrationUserDataSpecialSymbols("ru").getName());
-            $("[name='phone']").setValue(RegistrationData.registrationUserValidData("ru").getPhone());
+            $("[name='name']").setValue(userSpecialSymbols.getName());
+            $("[name='phone']").setValue(userValid.getPhone());
             $("[role='presentation']").click();
             $$("button").find(exactText("Запланировать")).click();
             SelenideElement name = $("[data-test-id='name']");
@@ -158,12 +162,12 @@ public class DeliveryTest {
         @Test
             //ussue2
         void shouldNotReplanMeetingPhoneSpecialSymbols() {
-            $("[placeholder='Город']").setValue(RegistrationData.registrationUserValidData("ru").getCity());
+            $("[placeholder='Город']").setValue(userValid.getCity());
             $("[type='tel'][placeholder='Дата встречи']").click();
             $("[type='tel'][placeholder='Дата встречи']").sendKeys(Keys.SHIFT, Keys.HOME, Keys.DELETE);
             $("[type='tel'][placeholder='Дата встречи']").setValue(RegistrationData.registrationDate("ru").getDate());
-            $("[name='name']").setValue(RegistrationData.registrationUserValidData("ru").getName());
-            $("[name='phone']").setValue(RegistrationData.registrationUserDataSpecialSymbols("ru").getPhone());
+            $("[name='name']").setValue(userValid.getName());
+            $("[name='phone']").setValue(userSpecialSymbols.getPhone());
             $("[role='presentation']").click();
             $$("button").find(exactText("Запланировать")).click();
             SelenideElement phone = $("[data-test-id='phone']");
@@ -172,12 +176,12 @@ public class DeliveryTest {
 
         @Test
         void shouldNotReplanMeetingDateSpesialSymbol() {
-            $("[placeholder='Город']").setValue(RegistrationData.registrationUserValidData("ru").getCity());
+            $("[placeholder='Город']").setValue(userValid.getCity());
             $("[type='tel'][placeholder='Дата встречи']").click();
             $("[type='tel'][placeholder='Дата встречи']").sendKeys(Keys.SHIFT, Keys.HOME, Keys.DELETE);
             $("[type='tel'][placeholder='Дата встречи']").setValue(RegistrationData.registrationUserDataSpecialSymbols("ru").getPhone());
-            $("[name='name']").setValue(RegistrationData.registrationUserValidData("ru").getName());
-            $("[name='phone']").setValue(RegistrationData.registrationUserValidData("ru").getPhone());
+            $("[name='name']").setValue(userValid.getName());
+            $("[name='phone']").setValue(userValid.getPhone());
             $("[role='presentation']").click();
             $$("button").find(exactText("Запланировать")).click();
             SelenideElement date = $("[data-test-id='date']");
@@ -190,12 +194,12 @@ public class DeliveryTest {
 
         @Test
         void shouldNotReplanMeetingCityNotValid() {
-            $("[placeholder='Город']").setValue(RegistrationData.registrationUserNotValidData("ru").getCity());
+            $("[placeholder='Город']").setValue(userNotValid.getCity());
             $("[type='tel'][placeholder='Дата встречи']").click();
             $("[type='tel'][placeholder='Дата встречи']").sendKeys(Keys.SHIFT, Keys.HOME, Keys.DELETE);
             $("[type='tel'][placeholder='Дата встречи']").setValue(RegistrationData.registrationDate("ru").getDate());
-            $("[name='name']").setValue(RegistrationData.registrationUserValidData("ru").getName());
-            $("[name='phone']").setValue(RegistrationData.registrationUserValidData("ru").getPhone());
+            $("[name='name']").setValue(userValid.getName());
+            $("[name='phone']").setValue(userValid.getPhone());
             $("[role='presentation']").click();
             $$("button").find(exactText("Запланировать")).click();
             SelenideElement city = $("[data-test-id='city']");
@@ -205,12 +209,12 @@ public class DeliveryTest {
         @Test
             //ussue3
         void shouldNotReplanMeetingNameNotValid() {
-            $("[placeholder='Город']").setValue(RegistrationData.registrationUserValidData("ru").getCity());
+            $("[placeholder='Город']").setValue(userValid.getCity());
             $("[type='tel'][placeholder='Дата встречи']").click();
             $("[type='tel'][placeholder='Дата встречи']").sendKeys(Keys.SHIFT, Keys.HOME, Keys.DELETE);
             $("[type='tel'][placeholder='Дата встречи']").setValue(RegistrationData.registrationDate("ru").getDate());
-            $("[name='name']").setValue(RegistrationData.registrationUserNotValidData("ru").getName());
-            $("[name='phone']").setValue(RegistrationData.registrationUserValidData("ru").getPhone());
+            $("[name='name']").setValue(userNotValid.getName());
+            $("[name='phone']").setValue(userValid.getPhone());
             $("[role='presentation']").click();
             $$("button").find(exactText("Запланировать")).click();
             SelenideElement name = $("[data-test-id='name']");
@@ -220,12 +224,12 @@ public class DeliveryTest {
         @Test
             //ussue4
         void shouldNotReplanMeetingPhoneNotValid() {
-            $("[placeholder='Город']").setValue(RegistrationData.registrationUserValidData("ru").getCity());
+            $("[placeholder='Город']").setValue(userValid.getCity());
             $("[type='tel'][placeholder='Дата встречи']").click();
             $("[type='tel'][placeholder='Дата встречи']").sendKeys(Keys.SHIFT, Keys.HOME, Keys.DELETE);
             $("[type='tel'][placeholder='Дата встречи']").setValue(RegistrationData.registrationDate("ru").getDate());
-            $("[name='name']").setValue(RegistrationData.registrationUserValidData("ru").getName());
-            $("[name='phone']").setValue(RegistrationData.registrationUserNotValidData("ru").getPhone());
+            $("[name='name']").setValue(userValid.getName());
+            $("[name='phone']").setValue(userNotValid.getPhone());
             $("[role='presentation']").click();
             $$("button").find(exactText("Запланировать")).click();
             SelenideElement phone = $("[data-test-id='phone']");
