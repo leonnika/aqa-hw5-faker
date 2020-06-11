@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 import ru.netology.data.RegistrationData;
+import ru.netology.data.RegistrationSpecificName;
 import ru.netology.data.RegistrationUser;
 
 import static com.codeborne.selenide.Condition.exactText;
@@ -207,7 +208,7 @@ RegistrationUser userNotValid =RegistrationData.registrationUserNotValidData("ru
         }
 
         @Test
-            //ussue3
+
         void shouldNotReplanMeetingNameNotValid() {
             $("[placeholder='Город']").setValue(userValid.getCity());
             $("[type='tel'][placeholder='Дата встречи']").click();
@@ -222,7 +223,7 @@ RegistrationUser userNotValid =RegistrationData.registrationUserNotValidData("ru
         }
 
         @Test
-            //ussue4
+            //ussue3
         void shouldNotReplanMeetingPhoneNotValid() {
             $("[placeholder='Город']").setValue(userValid.getCity());
             $("[type='tel'][placeholder='Дата встречи']").click();
@@ -239,7 +240,6 @@ RegistrationUser userNotValid =RegistrationData.registrationUserNotValidData("ru
 
     @Nested
     class NameOptions {
-
         @BeforeEach
         void init() {
             $("[placeholder='Город']").setValue(RegistrationData.registrationUserValidData("ru").getCity());
@@ -273,7 +273,7 @@ RegistrationUser userNotValid =RegistrationData.registrationUserNotValidData("ru
         }
 
         @Test
-            //ussue5
+            //ussue4
         void shouldNotReplanMeetingNameletterYO() {
             $("[name='name']").setValue(RegistrationData.registrationNameletterYO("ru").getName());
             $$("button").find(exactText("Запланировать")).click();
@@ -281,7 +281,7 @@ RegistrationUser userNotValid =RegistrationData.registrationUserNotValidData("ru
         }
 
         @Test
-            //ussue6
+            //ussue5
         void shouldNotReplanMeetingNameDifferentCaseLetters() {
             $("[name='name']").setValue(RegistrationData.registrationNameDifferentCaseLetters("ru").getName());
             $$("button").find(exactText("Запланировать")).click();
