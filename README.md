@@ -15,8 +15,10 @@
 ## Руководство использования
 При разработке автотестирования использовались Faker, Lombok, Data-классы (для группировки нужных полей) и утилитный класс-генератор данных.
 * Запустите приложение командой 
-''java -jar ./artifacts/app-card-delivery.jar''
+
+java -jar ./artifacts/app-card-delivery.jar
 * Запустите автотесты командой
+
 ./gradlew test -Dselenide.headless=true --info
 
 * Проверить успешность сборки CI на Appveyor
