@@ -208,7 +208,7 @@ RegistrationUser userNotValid =RegistrationData.registrationUserNotValidData("ru
         }
 
         @Test
-
+//issue 6
         void shouldNotReplanMeetingNameNotValid() {
             $("[placeholder='Город']").setValue(userValid.getCity());
             $("[type='tel'][placeholder='Дата встречи']").click();
@@ -219,7 +219,7 @@ RegistrationUser userNotValid =RegistrationData.registrationUserNotValidData("ru
             $("[role='presentation']").click();
             $$("button").find(exactText("Запланировать")).click();
             SelenideElement name = $("[data-test-id='name']");
-            name.$("[class='input__sub']").shouldHave(exactText("Укажите точно как в паспорте"));
+            name.$("[class='input__sub']").shouldHave(exactText("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
         }
 
         @Test
@@ -266,10 +266,10 @@ RegistrationUser userNotValid =RegistrationData.registrationUserNotValidData("ru
 
         @Test
         void shouldNotReplanMeetingNameInEnglish() {
-            $("[name='name']").setValue(RegistrationData.registrationNameInEnglish("ru").getName());
+            $("[name='name']").setValue(RegistrationData.registrationNameInEnglish("en").getName());
             $$("button").find(exactText("Запланировать")).click();
             SelenideElement name = $("[data-test-id='name']");
-            name.$("[class='input__sub']").shouldHave(exactText("Укажите точно как в паспорте"));
+            name.$("[class='input__sub']").shouldHave(exactText("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
         }
 
         @Test

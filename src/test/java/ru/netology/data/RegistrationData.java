@@ -37,8 +37,9 @@ public class RegistrationData {
                 new Locale("ru"), new RandomService());
         String phone = fakeValuesService.regexify("[1-9]{11}");
         phone = "+" + phone;
+        String name = faker.name().lastName() + " " + faker.name().firstName();
         return new RegistrationUser(
-                faker.name().fullName(),
+                name,
                 city[randomIndexCity],
                 phone);
     }
@@ -93,7 +94,7 @@ public class RegistrationData {
     }
 
     public static RegistrationSpecificName registrationNameInEnglish(String locale) {
-        Faker faker = new Faker(new Locale("ru"));
+        Faker faker = new Faker(new Locale("en"));
          return new RegistrationSpecificName(faker.name().fullName());
     }
 
